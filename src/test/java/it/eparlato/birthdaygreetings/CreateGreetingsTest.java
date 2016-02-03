@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -17,7 +18,6 @@ public class CreateGreetingsTest {
 	
 	@Test
 	public void oneEmployeeCreateGreetings() throws Exception {
-		
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		
 		final List<Employee> employees = new ArrayList<Employee>();
@@ -36,8 +36,7 @@ public class CreateGreetingsTest {
 		assertEquals(1, greetingsController.getGreetings().size());
 	}
 	
-
-	public static class GreetingsController {
+	public class GreetingsController {
 
 		private EmployeeRepository employeeRepository;
 		private List<Greetings> greetingsList = new ArrayList<Greetings>();
@@ -63,11 +62,11 @@ public class CreateGreetingsTest {
 
 	}
 	 
-	public static class Employee {
+	private class Employee {
 
 	}
 	
-	public static class Greetings {
+	private class Greetings {
 
 		public Greetings(Employee employee) {
 		}
