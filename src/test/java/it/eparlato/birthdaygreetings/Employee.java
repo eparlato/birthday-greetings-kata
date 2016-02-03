@@ -18,8 +18,7 @@ public class Employee {
 		calDateOfBirth.setTime(employeeDateOfBirth);
 		calToday.setTime(today);
 		
-		if(calDateOfBirth.get(Calendar.MONTH) == calToday.get(Calendar.MONTH) 
-				&& calDateOfBirth.get(Calendar.DAY_OF_MONTH) == calToday.get(Calendar.DAY_OF_MONTH)) {
+		if(calDateOfBirth.get(Calendar.DAY_OF_YEAR) == calToday.get(Calendar.DAY_OF_YEAR)) {
 			return true;
 		} else {
 			return false;
