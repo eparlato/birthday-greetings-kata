@@ -1,5 +1,6 @@
 package it.eparlato.birthdaygreetings;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Employee {
@@ -11,7 +12,19 @@ public class Employee {
 	}
 
 	public boolean isBirthday(Date today) {
-		return true;
+		Calendar calDateOfBirth = Calendar.getInstance();
+		Calendar calToday = Calendar.getInstance();
+		
+		calDateOfBirth.setTime(employeeDateOfBirth);
+		calToday.setTime(today);
+		
+		if(calDateOfBirth.get(Calendar.MONTH) == calToday.get(Calendar.MONTH) 
+				&& calDateOfBirth.get(Calendar.DAY_OF_MONTH) == calToday.get(Calendar.DAY_OF_MONTH)) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 
 }
