@@ -21,7 +21,17 @@ public class CheckForBirthdayTest {
 	
 	@Test
 	public void todayIsNotTheBirthdayOfEmployee() throws Exception {
-		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("12/09/1982");
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("02/02/1982");
+		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
+		
+		Employee employee = new Employee(employeeDateOfBirth);
+		
+		assertFalse(employee.isBirthday(today));
+	}
+	
+	@Test
+	public void todayTooIsNotTheBirthdayOfEmployee() throws Exception {
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/01/1982");
 		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
 		
 		Employee employee = new Employee(employeeDateOfBirth);
