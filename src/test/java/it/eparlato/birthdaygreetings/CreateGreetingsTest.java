@@ -2,6 +2,7 @@ package it.eparlato.birthdaygreetings;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,9 +41,8 @@ public class CreateGreetingsTest {
 	}
 	
 	@Test
-	@Ignore("I must verify if today is the employee's birthday or not")
 	public void oneEmployeeDoNotCreateGreetings() throws Exception {
-		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("02/03/1982");
 
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final List<Employee> employees = new ArrayList<Employee>();
@@ -74,9 +74,14 @@ public class CreateGreetingsTest {
 			return greetingsList;
 		}
 
-		public void process() {
+		public void process() throws ParseException {
 			Employee employee = employeeRepository.getEmployees().get(0);
-			greetingsList.add(new Greetings(employee));
+			
+			Date today = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
+			
+			if(employee.isBirthday(today)) {
+				greetingsList.add(new Greetings(employee));
+			}
 		}
 	}
 
