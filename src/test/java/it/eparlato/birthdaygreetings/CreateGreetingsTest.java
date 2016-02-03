@@ -2,7 +2,9 @@ package it.eparlato.birthdaygreetings;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.jmock.Expectations;
@@ -18,10 +20,11 @@ public class CreateGreetingsTest {
 	
 	@Test
 	public void oneEmployeeCreateGreetings() throws Exception {
-		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
 		
+		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);		
 		final List<Employee> employees = new ArrayList<Employee>();
-		employees.add(new Employee());
+		employees.add(new Employee(employeeDateOfBirth));
 		
 		context.checking(new Expectations() {
 			{
@@ -34,6 +37,28 @@ public class CreateGreetingsTest {
 		greetingsController.process();
 		
 		assertEquals(1, greetingsController.getGreetings().size());
+	}
+	
+	@Test
+	@Ignore("I must verify if today is the employee's birthday or not")
+	public void oneEmployeeDoNotCreateGreetings() throws Exception {
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
+
+		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
+		final List<Employee> employees = new ArrayList<Employee>();
+		employees.add(new Employee(employeeDateOfBirth));
+		
+		context.checking(new Expectations() {
+			{
+				allowing(employeeRepository).getEmployees();
+				will(returnValue(employees));
+			}
+		});
+		
+		GreetingsController greetingsController  = new GreetingsController(employeeRepository);	
+		greetingsController.process();
+		
+		assertEquals(0, greetingsController.getGreetings().size());
 	}
 	
 	public class GreetingsController {
@@ -62,10 +87,6 @@ public class CreateGreetingsTest {
 
 	}
 	 
-	private class Employee {
-
-	}
-	
 	private class Greetings {
 
 		public Greetings(Employee employee) {
