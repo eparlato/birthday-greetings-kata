@@ -34,7 +34,7 @@ public class CreateGreetingsTest {
 		});
 		
 		GreetingsController greetingsController  = new GreetingsController(employeeRepository);	
-		greetingsController.process();
+		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 		
 		assertEquals(1, greetingsController.getGreetings().size());
 	}
@@ -60,7 +60,7 @@ public class CreateGreetingsTest {
 		});
 		
 		GreetingsController greetingsController  = new GreetingsController(employeeRepository, messageService);	
-		greetingsController.process();
+		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class CreateGreetingsTest {
 		});
 		
 		GreetingsController greetingsController  = new GreetingsController(employeeRepository);	
-		greetingsController.process();
+		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 		
 		assertEquals(0, greetingsController.getGreetings().size());
 	}
@@ -103,10 +103,8 @@ public class CreateGreetingsTest {
 			return greetingsList;
 		}
 
-		public void process() throws ParseException {
+		public void process(Date today) throws ParseException {
 			Employee employee = employeeRepository.getEmployees().get(0);
-			
-			Date today = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
 			
 			if(employee.isBirthday(today)) {
 				greetingsList.add(new Greetings(employee));
