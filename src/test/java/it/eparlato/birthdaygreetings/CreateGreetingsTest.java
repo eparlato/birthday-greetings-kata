@@ -91,7 +91,6 @@ public class CreateGreetingsTest {
 		assertEquals(0, greetingsController.getGreetings().size());
 	}
 	
-	// TODO one employee, do not send greetings
 	@Test
 	public void oneEmployeeDoNotSendGreetings() throws Exception {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
@@ -138,7 +137,7 @@ public class CreateGreetingsTest {
 				greetingsList.add(new Greetings(employee));
 			}
 			
-			if(messageService != null && employee.isBirthday(today)) {
+			if(employee.isBirthday(today)) {
 				messageService.sendGreetingsToEmployee(employee);
 			}
 		}
