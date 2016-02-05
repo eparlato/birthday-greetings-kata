@@ -18,6 +18,7 @@ public class CreateGreetingsTest {
 	@Rule
 	public final JUnitRuleMockery context = new JUnitRuleMockery();
 	
+	// REFACTOR no more need of this behavior, delete it.
 	@Test
 	public void oneEmployeeCreateGreetings() throws Exception {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
@@ -67,6 +68,7 @@ public class CreateGreetingsTest {
 		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 	}
 	
+	// REFACTOR no more need of this behavior, delete it.
 	@Test
 	public void oneEmployeeDoNotCreateGreetings() throws Exception {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("02/03/1982");
@@ -87,6 +89,31 @@ public class CreateGreetingsTest {
 		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 		
 		assertEquals(0, greetingsController.getGreetings().size());
+	}
+	
+	// TODO one employee, do not send greetings
+	@Test
+	public void oneEmployeeDoNotSendGreetings() throws Exception {
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
+		
+		final Employee employee = new Employee(employeeDateOfBirth);
+		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);	
+		final MessageService messageService = context.mock(MessageService.class);
+		final List<Employee> employees = new ArrayList<Employee>();
+		employees.add(employee);
+		
+		
+		context.checking(new Expectations() {
+			{
+				allowing(employeeRepository).getEmployees();
+				will(returnValue(employees));
+				
+				never(messageService).sendGreetingsToEmployee(employee);
+			}
+		});
+		
+		GreetingsController greetingsController  = new GreetingsController(employeeRepository, messageService);	
+		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("17/11/2016"));
 	}
 	
 	public class GreetingsController {
