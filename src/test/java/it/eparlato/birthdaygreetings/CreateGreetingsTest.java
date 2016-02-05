@@ -69,7 +69,6 @@ public class CreateGreetingsTest {
 	public class GreetingsController {
 
 		private EmployeeRepository employeeRepository;
-		private List<Greetings> greetingsList = new ArrayList<Greetings>();
 		private MessageService messageService;
 		
 		public GreetingsController(EmployeeRepository employeeRepository, MessageService messageService) {
@@ -77,16 +76,8 @@ public class CreateGreetingsTest {
 			this.messageService = messageService;
 		}
 
-		public List<Greetings> getGreetings() {
-			return greetingsList;
-		}
-
 		public void process(Date today) {
 			Employee employee = employeeRepository.getEmployees().get(0);
-			
-			if(employee.isBirthday(today)) {
-				greetingsList.add(new Greetings(employee));
-			}
 			
 			if(employee.isBirthday(today)) {
 				messageService.sendGreetingsToEmployee(employee);
