@@ -103,7 +103,7 @@ public class CreateGreetingsTest {
 			return greetingsList;
 		}
 
-		public void process(Date today) throws ParseException {
+		public void process(Date today) {
 			Employee employee = employeeRepository.getEmployees().get(0);
 			
 			if(employee.isBirthday(today)) {
