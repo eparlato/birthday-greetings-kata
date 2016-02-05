@@ -1,6 +1,6 @@
 package it.eparlato.birthdaygreetings;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,18 +22,22 @@ public class CreateGreetingsTest {
 	public void oneEmployeeCreateGreetings() throws Exception {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
 		
-		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);		
+		final Employee employee = new Employee(employeeDateOfBirth);
+		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
+		final MessageService messageService = context.mock(MessageService.class);
 		final List<Employee> employees = new ArrayList<Employee>();
-		employees.add(new Employee(employeeDateOfBirth));
+		employees.add(employee);
 		
 		context.checking(new Expectations() {
 			{
 				allowing(employeeRepository).getEmployees();
 				will(returnValue(employees));
+				
+				allowing(messageService).sendGreetingsToEmployee(employee);
 			}
 		});
 		
-		GreetingsController greetingsController  = new GreetingsController(employeeRepository);	
+		GreetingsController greetingsController  = new GreetingsController(employeeRepository, messageService);	
 		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 		
 		assertEquals(1, greetingsController.getGreetings().size());
@@ -68,6 +72,7 @@ public class CreateGreetingsTest {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("02/03/1982");
 
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
+		final MessageService messageService = context.mock(MessageService.class);
 		final List<Employee> employees = new ArrayList<Employee>();
 		employees.add(new Employee(employeeDateOfBirth));
 		
@@ -78,7 +83,7 @@ public class CreateGreetingsTest {
 			}
 		});
 		
-		GreetingsController greetingsController  = new GreetingsController(employeeRepository);	
+		GreetingsController greetingsController  = new GreetingsController(employeeRepository, messageService);	
 		greetingsController.process(new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016"));
 		
 		assertEquals(0, greetingsController.getGreetings().size());
@@ -90,10 +95,6 @@ public class CreateGreetingsTest {
 		private List<Greetings> greetingsList = new ArrayList<Greetings>();
 		private MessageService messageService;
 		
-		public GreetingsController(EmployeeRepository employeeRepository) {
-			this.employeeRepository = employeeRepository;
-		}
-
 		public GreetingsController(EmployeeRepository employeeRepository, MessageService messageService) {
 			this.employeeRepository = employeeRepository;
 			this.messageService = messageService;
@@ -110,7 +111,7 @@ public class CreateGreetingsTest {
 				greetingsList.add(new Greetings(employee));
 			}
 			
-			if(messageService != null) {
+			if(messageService != null && employee.isBirthday(today)) {
 				messageService.sendGreetingsToEmployee(employee);
 			}
 		}
