@@ -19,7 +19,7 @@ public class CreateGreetingsTest {
 	public final JUnitRuleMockery context = new JUnitRuleMockery();
 	
 	@Test
-	public void oneEmployeeSendGreetings() throws Exception {
+	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
 		
 		final Employee employee = new Employee(employeeDateOfBirth);
