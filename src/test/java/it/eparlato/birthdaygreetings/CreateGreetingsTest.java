@@ -56,9 +56,7 @@ public class CreateGreetingsTest {
 		public void process(Date today) {
 			Employee employee = employeeRepository.getEmployeesWhoseBirthadyIs(today).get(0);
 			
-			if(employee.isBirthday(today)) {
-				messageService.sendGreetingsToEmployee(employee);
-			}
+			messageService.sendGreetingsToEmployee(employee);
 		}
 	}
 
