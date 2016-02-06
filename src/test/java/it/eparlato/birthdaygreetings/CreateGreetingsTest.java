@@ -43,6 +43,25 @@ public class CreateGreetingsTest {
 		greetingsController.process(today);
 	}
 	
+	@Test
+	public void noEmployeesWhoseBirthdayIsToday() throws Exception {
+		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
+		final MessageService messageService = context.mock(MessageService.class);
+		final Date uselessDate = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
+		final List<Employee> noEmployees = new ArrayList<Employee>();
+		context.checking(new Expectations() {
+			{
+				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(uselessDate);
+				will(returnValue(noEmployees));
+				
+				never(messageService).sendGreetingsToEmployee(new Employee(uselessDate));
+			}
+		});
+		
+		GreetingsController greetingsController = new GreetingsController(employeeRepository, messageService);
+		greetingsController.process(uselessDate);
+	}
+	
 	public class GreetingsController {
 
 		private EmployeeRepository employeeRepository;
@@ -54,9 +73,12 @@ public class CreateGreetingsTest {
 		}
 
 		public void process(Date today) {
-			Employee employee = employeeRepository.getEmployeesWhoseBirthadyIs(today).get(0);
 			
-			messageService.sendGreetingsToEmployee(employee);
+			List<Employee> employeesWhoseBirthdayIsToday = employeeRepository.getEmployeesWhoseBirthadyIs(today);
+			
+			for(Employee employee : employeesWhoseBirthdayIsToday) {
+				messageService.sendGreetingsToEmployee(employee);
+			}
 		}
 	}
 
