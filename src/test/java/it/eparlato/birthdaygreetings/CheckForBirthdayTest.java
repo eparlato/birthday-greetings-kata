@@ -38,5 +38,15 @@ public class CheckForBirthdayTest {
 		
 		assertFalse(employee.isBirthday(today));
 	}
+	
+	@Test
+	public void todayIsBirthdayOfEmployeeWhoseBirthYearIsALeapYear() throws Exception {
+		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("15/01/2000");
+		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("15/01/2016");
+		
+		Employee employee = new Employee(employeeDateOfBirth);
+		
+		assertTrue(employee.isBirthday(today));
+	}
 
 }
