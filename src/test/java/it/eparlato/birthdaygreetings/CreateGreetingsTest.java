@@ -39,27 +39,27 @@ public class CreateGreetingsTest {
 			}
 		});
 
-		GreetingsController greetingsController = new GreetingsController(employeeRepository, messageService);
-		greetingsController.process(today);
+		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
+		birthdayService.process(today);
 	}
 
 	@Test
 	public void noEmployeesWhoseBirthdayIsToday() throws Exception {
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
-		final Date uselessDate = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
+		final Date anyDateIsOkForThisTest = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
 		final List<Employee> noEmployees = new ArrayList<Employee>();
 		context.checking(new Expectations() {
 			{
-				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(uselessDate);
+				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(anyDateIsOkForThisTest);
 				will(returnValue(noEmployees));
 
-				never(messageService).sendGreetingsToEmployee(new Employee(uselessDate));
+				never(messageService).sendGreetingsToEmployee(new Employee(anyDateIsOkForThisTest));
 			}
 		});
 
-		GreetingsController greetingsController = new GreetingsController(employeeRepository, messageService);
-		greetingsController.process(uselessDate);
+		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
+		birthdayService.process(anyDateIsOkForThisTest);
 	}
 
 	@Test
@@ -95,35 +95,35 @@ public class CreateGreetingsTest {
 			}
 		});
 
-		GreetingsController greetingsController = new GreetingsController(employeeRepository, messageService);
-		greetingsController.process(today);
+		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
+		birthdayService.process(today);
 	}
 
 	@Test
 	public void errorWhileRetrievingEmployeesWhoseBirthdayIsToday() throws Exception {
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
-		final Date uselessDate = new SimpleDateFormat("dd/MM/yyyy").parse("15/08/2000");
+		final Date anyDateIsOkForThisTest = new SimpleDateFormat("dd/MM/yyyy").parse("15/08/2000");
 		
 		context.checking(new Expectations() {
 			{
-				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(uselessDate));
+				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(anyDateIsOkForThisTest));
 				will(throwException(new IOException()));
 				
-				never(messageService).sendGreetingsToEmployee(new Employee(uselessDate));
+				never(messageService).sendGreetingsToEmployee(new Employee(anyDateIsOkForThisTest));
 			}
 		});
 		
-		GreetingsController greetingsController = new GreetingsController(employeeRepository, messageService);
-		greetingsController.process(uselessDate);
+		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
+		birthdayService.process(anyDateIsOkForThisTest);
 	}
 	
-	public class GreetingsController {
+	public class BirthdayService {
 
 		private EmployeeRepository employeeRepository;
 		private MessageService messageService;
 
-		public GreetingsController(EmployeeRepository employeeRepository, MessageService messageService) {
+		public BirthdayService(EmployeeRepository employeeRepository, MessageService messageService) {
 			this.employeeRepository = employeeRepository;
 			this.messageService = messageService;
 		}
