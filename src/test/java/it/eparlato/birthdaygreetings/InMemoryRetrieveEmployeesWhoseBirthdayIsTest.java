@@ -24,7 +24,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 		assertTrue(employees.isEmpty());
 	}
 	
-	public class InMemoryEmployeeRepository {
+	public class InMemoryEmployeeRepository implements EmployeeRepository {
 
 		public List<Employee> getEmployeesWhoseBirthadyIs(Date today) {
 			return new ArrayList<Employee>();

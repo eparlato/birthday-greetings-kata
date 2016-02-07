@@ -148,10 +148,6 @@ public class CreateGreetingsTest {
 		}
 	}
 
-	public interface EmployeeRepository {
-		public List<Employee> getEmployeesWhoseBirthadyIs(Date today) throws IOException;
-	}
-
 	public interface MessageService {
 		void sendGreetingsToEmployee(Employee employee);
 	}
