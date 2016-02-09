@@ -1,10 +1,10 @@
 package it.eparlato.birthdaygreetings;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +40,35 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
 		assertEquals(employee, employees.get(0));
 	}
+	
+	@Test
+	public void aFewEmployeesWhoseBirthdayIsToday() throws Exception {
+		Employee employeeA = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1996"));
+		Employee employeeB = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("02/07/1967"));
+		Employee employeeC = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1984"));
+		Employee employeeD = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("14/07/1974"));
+		Employee employeeE = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1929"));
+
+		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
+					Arrays.asList(
+							employeeA,
+							employeeB,
+							employeeC,
+							employeeD,
+							employeeE
+							)
+				);
+
+		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("15/07/2015");
+
+		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
+		
+		assertTrue(employees.contains(employeeA));
+		assertTrue(employees.contains(employeeC));
+		assertTrue(employees.contains(employeeE));
+		assertFalse(employees.contains(employeeB));
+		assertFalse(employees.contains(employeeD));
+	}
 
 	public class InMemoryEmployeeRepository implements EmployeeRepository {
 
@@ -59,6 +88,5 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
 			return employeesWhoseBirthdayIsToday;
 		}
-
 	}
 }

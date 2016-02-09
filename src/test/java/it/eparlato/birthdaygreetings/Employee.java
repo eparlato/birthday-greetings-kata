@@ -19,13 +19,10 @@ public class Employee {
 		calToday.setTime(today);
 		
 		if(calDateOfBirth.get(Calendar.MONTH) == calToday.get(Calendar.MONTH)
-						&& calDateOfBirth.get(Calendar.DAY_OF_MONTH) == calToday.get(Calendar.DAY_OF_MONTH)
-				) {
+						&& calDateOfBirth.get(Calendar.DAY_OF_MONTH) == calToday.get(Calendar.DAY_OF_MONTH)) {
 			return true;
 		} else {
 			return false;
 		}
-		
 	}
-
 }
