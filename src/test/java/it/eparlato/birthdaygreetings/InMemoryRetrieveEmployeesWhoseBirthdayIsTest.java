@@ -14,6 +14,8 @@ import org.junit.Test;
 
 public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
+	private final String WHATEVER = "For the purpose of the test whatever value is valid";
+	
 	@Test
 	public void noEmployeesWhoseBirthdayIsToday() throws Exception {
 
@@ -29,7 +31,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
 	@Test
 	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
-		Employee employee = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1976"));
+		Employee employee = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1976"), WHATEVER);
 
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.singletonList(employee));
@@ -43,11 +45,11 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 	
 	@Test
 	public void aFewEmployeesWhoseBirthdayIsToday() throws Exception {
-		Employee employeeA = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1996"));
-		Employee employeeB = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("02/07/1967"));
-		Employee employeeC = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1984"));
-		Employee employeeD = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("14/07/1974"));
-		Employee employeeE = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1929"));
+		Employee employeeA = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1996"), WHATEVER);
+		Employee employeeB = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("02/07/1967"), WHATEVER);
+		Employee employeeC = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1984"), WHATEVER);
+		Employee employeeD = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("14/07/1974"), WHATEVER);
+		Employee employeeE = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1929"), WHATEVER);
 
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 					Arrays.asList(

@@ -6,9 +6,15 @@ import java.util.Date;
 public class Employee {
 
 	private Date employeeDateOfBirth;
+	private String lastName;
+	private String firstName;
+	private String email;
 
-	public Employee(Date employeeDateOfBirth) {
+	public Employee(String lastName, String firstName, Date employeeDateOfBirth, String email) {
+		this.lastName = lastName;
+		this.firstName = firstName;
 		this.employeeDateOfBirth = employeeDateOfBirth;
+		this.email = email;
 	}
 
 	public boolean isBirthday(Date today) {

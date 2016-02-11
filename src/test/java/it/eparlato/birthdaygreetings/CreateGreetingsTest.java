@@ -1,7 +1,5 @@
 package it.eparlato.birthdaygreetings;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ import org.junit.Test;
 
 public class CreateGreetingsTest {
 
+	private final String WHATEVER = "For the purpose of the test whatever value is valid";
+
 	@Rule
 	public final JUnitRuleMockery context = new JUnitRuleMockery();
 
@@ -22,7 +22,7 @@ public class CreateGreetingsTest {
 	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
 		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
 
-		final Employee employee = new Employee(employeeDateOfBirth);
+		final Employee employee = new Employee(WHATEVER, WHATEVER, employeeDateOfBirth, WHATEVER);
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
 		final List<Employee> employees = new ArrayList<Employee>();
@@ -54,7 +54,7 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(anyDateIsOkForThisTest);
 				will(returnValue(noEmployees));
 
-				never(messageService).sendGreetingsToEmployee(new Employee(anyDateIsOkForThisTest));
+				never(messageService).sendGreetingsToEmployee(new Employee(WHATEVER, WHATEVER, anyDateIsOkForThisTest, WHATEVER));
 			}
 		});
 
@@ -67,11 +67,11 @@ public class CreateGreetingsTest {
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
 
-		final Employee employeeA = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1906"));
-		final Employee employeeB = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1916"));
-		final Employee employeeC = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1956"));
-		final Employee employeeD = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1976"));
-		final Employee employeeE = new Employee(new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1996"));
+		final Employee employeeA = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1906"), WHATEVER);
+		final Employee employeeB = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1916"), WHATEVER);
+		final Employee employeeC = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1956"), WHATEVER);
+		final Employee employeeD = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1976"), WHATEVER);
+		final Employee employeeE = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1996"), WHATEVER);
 		final List<Employee> employees = new ArrayList<Employee>();
 
 		employees.add(employeeA);
@@ -110,7 +110,7 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(anyDateIsOkForThisTest));
 				will(throwException(new IOException()));
 				
-				never(messageService).sendGreetingsToEmployee(new Employee(anyDateIsOkForThisTest));
+				never(messageService).sendGreetingsToEmployee(new Employee(WHATEVER, WHATEVER, anyDateIsOkForThisTest, WHATEVER));
 			}
 		});
 		
@@ -139,9 +139,9 @@ public class CreateGreetingsTest {
 				}
 
 			} catch (IOException e) {
-				// TODO: create a new ErrorManager interface?
-				// error handling should be placed somewhere else (EmployeeRepository)?
-				// only IOException could be thrown?
+				// TODO 1: Move this catch block into EmployeeRepository. Errors and exceptions will be handled 
+				// by EmployeeRepository. BirthdayService doesn't check data integrity, it just send greetings messages.
+				// TODO 2: create a new ErrorManager interface?
 				System.err.println("Error to deal with");
 			}
 
@@ -150,6 +150,8 @@ public class CreateGreetingsTest {
 
 	public interface MessageService {
 		void sendGreetingsToEmployee(Employee employee);
+
+		void sendGreetings(Greetings greetings);
 	}
 
 }
