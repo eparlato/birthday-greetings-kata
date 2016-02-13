@@ -1,20 +1,20 @@
 package it.eparlato.birthdaygreetings;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
-	private final String WHATEVER = "For the purpose of the test whatever value is valid";
+	private final String WHATEVER = Utils.WHATEVER;
 	
 	@Test
 	public void noEmployeesWhoseBirthdayIsToday() throws Exception {
@@ -22,7 +22,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.<Employee> emptyList());
 
-		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/2015");
+		Date today = Utils.toDate("31/12/2015");
 
 		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
 
@@ -31,12 +31,12 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
 	@Test
 	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
-		Employee employee = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("31/12/1976"), WHATEVER);
+		Employee employee = new Employee(WHATEVER, WHATEVER, Utils.toDate("31/12/1976"), WHATEVER);
 
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.singletonList(employee));
 
-		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("31/12/2015");
+		Date today = Utils.toDate("31/12/2015");
 
 		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
 
@@ -45,11 +45,11 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 	
 	@Test
 	public void aFewEmployeesWhoseBirthdayIsToday() throws Exception {
-		Employee employeeA = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1996"), WHATEVER);
-		Employee employeeB = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("02/07/1967"), WHATEVER);
-		Employee employeeC = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1984"), WHATEVER);
-		Employee employeeD = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("14/07/1974"), WHATEVER);
-		Employee employeeE = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("15/07/1929"), WHATEVER);
+		Employee employeeA = new Employee(WHATEVER, WHATEVER, Utils.toDate("15/07/1996"), WHATEVER);
+		Employee employeeB = new Employee(WHATEVER, WHATEVER, Utils.toDate("02/07/1967"), WHATEVER);
+		Employee employeeC = new Employee(WHATEVER, WHATEVER, Utils.toDate("15/07/1984"), WHATEVER);
+		Employee employeeD = new Employee(WHATEVER, WHATEVER, Utils.toDate("14/07/1974"), WHATEVER);
+		Employee employeeE = new Employee(WHATEVER, WHATEVER, Utils.toDate("15/07/1929"), WHATEVER);
 
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 					Arrays.asList(
@@ -61,7 +61,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 							)
 				);
 
-		Date today = new SimpleDateFormat("dd/MM/yyyy").parse("15/07/2015");
+		Date today = Utils.toDate("15/07/2015");
 
 		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
 		

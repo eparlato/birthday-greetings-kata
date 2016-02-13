@@ -1,7 +1,6 @@
 package it.eparlato.birthdaygreetings;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,22 +12,20 @@ import org.junit.Test;
 
 public class CreateGreetingsTest {
 
-	private final String WHATEVER = "For the purpose of the test whatever value is valid";
-
 	@Rule
 	public final JUnitRuleMockery context = new JUnitRuleMockery();
 
 	@Test
 	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
-		Date employeeDateOfBirth = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/1982");
+		Date employeeDateOfBirth = Utils.toDate("03/02/1982");
 
-		final Employee employee = new Employee(WHATEVER, WHATEVER, employeeDateOfBirth, WHATEVER);
+		final Employee employee = new Employee(Utils.WHATEVER, Utils.WHATEVER, employeeDateOfBirth, Utils.WHATEVER);
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
 		final List<Employee> employees = new ArrayList<Employee>();
 		employees.add(employee);
 
-		final Date today = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
+		final Date today = Utils.toDate("03/02/2016");
 
 		context.checking(new Expectations() {
 			{
@@ -47,14 +44,14 @@ public class CreateGreetingsTest {
 	public void noEmployeesWhoseBirthdayIsToday() throws Exception {
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
-		final Date anyDateIsOkForThisTest = new SimpleDateFormat("dd/MM/yyyy").parse("03/02/2016");
+		final Date anyDateIsOkForThisTest = Utils.toDate("03/02/2016");
 		final List<Employee> noEmployees = new ArrayList<Employee>();
 		context.checking(new Expectations() {
 			{
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(anyDateIsOkForThisTest);
 				will(returnValue(noEmployees));
 
-				never(messageService).sendGreetingsToEmployee(new Employee(WHATEVER, WHATEVER, anyDateIsOkForThisTest, WHATEVER));
+				never(messageService).sendGreetingsToEmployee(new Employee(Utils.WHATEVER, Utils.WHATEVER, anyDateIsOkForThisTest, Utils.WHATEVER));
 			}
 		});
 
@@ -67,11 +64,11 @@ public class CreateGreetingsTest {
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
 
-		final Employee employeeA = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1906"), WHATEVER);
-		final Employee employeeB = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1916"), WHATEVER);
-		final Employee employeeC = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1956"), WHATEVER);
-		final Employee employeeD = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1976"), WHATEVER);
-		final Employee employeeE = new Employee(WHATEVER, WHATEVER, new SimpleDateFormat("dd/MM/yyyy").parse("25/12/1996"), WHATEVER);
+		final Employee employeeA = new Employee(Utils.WHATEVER, Utils.WHATEVER, Utils.toDate("25/12/1906"), Utils.WHATEVER);
+		final Employee employeeB = new Employee(Utils.WHATEVER, Utils.WHATEVER, Utils.toDate("25/12/1916"), Utils.WHATEVER);
+		final Employee employeeC = new Employee(Utils.WHATEVER, Utils.WHATEVER, Utils.toDate("25/12/1956"), Utils.WHATEVER);
+		final Employee employeeD = new Employee(Utils.WHATEVER, Utils.WHATEVER, Utils.toDate("25/12/1976"), Utils.WHATEVER);
+		final Employee employeeE = new Employee(Utils.WHATEVER, Utils.WHATEVER, Utils.toDate("25/12/1996"), Utils.WHATEVER);
 		final List<Employee> employees = new ArrayList<Employee>();
 
 		employees.add(employeeA);
@@ -80,7 +77,7 @@ public class CreateGreetingsTest {
 		employees.add(employeeD);
 		employees.add(employeeE);
 
-		final Date today = new SimpleDateFormat("dd/MM/yyyy").parse("25/12/2016");
+		final Date today = Utils.toDate("25/12/2016");
 
 		context.checking(new Expectations() {
 			{
@@ -103,14 +100,14 @@ public class CreateGreetingsTest {
 	public void errorWhileRetrievingEmployeesWhoseBirthdayIsToday() throws Exception {
 		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
 		final MessageService messageService = context.mock(MessageService.class);
-		final Date anyDateIsOkForThisTest = new SimpleDateFormat("dd/MM/yyyy").parse("15/08/2000");
+		final Date anyDateIsOkForThisTest = Utils.toDate("15/08/2000");
 		
 		context.checking(new Expectations() {
 			{
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(anyDateIsOkForThisTest));
 				will(throwException(new IOException()));
 				
-				never(messageService).sendGreetingsToEmployee(new Employee(WHATEVER, WHATEVER, anyDateIsOkForThisTest, WHATEVER));
+				never(messageService).sendGreetingsToEmployee(new Employee(Utils.WHATEVER, Utils.WHATEVER, anyDateIsOkForThisTest, Utils.WHATEVER));
 			}
 		});
 		
