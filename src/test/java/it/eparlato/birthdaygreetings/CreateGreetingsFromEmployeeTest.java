@@ -24,12 +24,25 @@ public class CreateGreetingsFromEmployeeTest {
 		assertEquals("Happy birthday, dear Ugo!", greetings.getMessage());
 	}
 	
+	@Test
+	public void greetingsDestinationIsTheEmailAddressOfTheEmployee() throws Exception {
+		
+		Greetings greetings = new Greetings(
+				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate("12/11/1981"), "diego.catellani@megaditta.it"));
+		
+		assertEquals("diego.catellani@megaditta.it", greetings.getDestination());
+	}
+	
 	public class Greetings {
 
 		private Employee employee;
 
 		public Greetings(Employee employee) {
 			this.employee = employee;
+		}
+
+		public String getDestination() {
+			return employee.getEmail();
 		}
 
 		public String getMessage() {
