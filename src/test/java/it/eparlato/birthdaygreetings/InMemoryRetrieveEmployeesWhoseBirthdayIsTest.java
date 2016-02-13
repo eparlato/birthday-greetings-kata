@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +15,13 @@ import org.junit.Test;
 
 public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
-	private final String WHATEVER = Utils.WHATEVER;
+	private String anyString() {
+		return Utils.WHATEVER_STRING;
+	}
+	
+	private Date toDate(String dateAsString) throws ParseException {
+		return Utils.toDate(dateAsString);
+	}
 	
 	@Test
 	public void noEmployeesWhoseBirthdayIsToday() throws Exception {
@@ -22,7 +29,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.<Employee> emptyList());
 
-		Date today = Utils.toDate("31/12/2015");
+		Date today = toDate("31/12/2015");
 
 		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
 
@@ -31,12 +38,12 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 
 	@Test
 	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
-		Employee employee = new Employee(WHATEVER, WHATEVER, Utils.toDate("31/12/1976"), WHATEVER);
+		Employee employee = new Employee(anyString(), anyString(), toDate("31/12/1976"), anyString());
 
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.singletonList(employee));
 
-		Date today = Utils.toDate("31/12/2015");
+		Date today = toDate("31/12/2015");
 
 		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
 
@@ -45,11 +52,11 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 	
 	@Test
 	public void aFewEmployeesWhoseBirthdayIsToday() throws Exception {
-		Employee employeeA = new Employee(WHATEVER, WHATEVER, Utils.toDate("15/07/1996"), WHATEVER);
-		Employee employeeB = new Employee(WHATEVER, WHATEVER, Utils.toDate("02/07/1967"), WHATEVER);
-		Employee employeeC = new Employee(WHATEVER, WHATEVER, Utils.toDate("15/07/1984"), WHATEVER);
-		Employee employeeD = new Employee(WHATEVER, WHATEVER, Utils.toDate("14/07/1974"), WHATEVER);
-		Employee employeeE = new Employee(WHATEVER, WHATEVER, Utils.toDate("15/07/1929"), WHATEVER);
+		Employee employeeA = new Employee(anyString(), anyString(), toDate("15/07/1996"), anyString());
+		Employee employeeB = new Employee(anyString(), anyString(), toDate("02/07/1967"), anyString());
+		Employee employeeC = new Employee(anyString(), anyString(), toDate("15/07/1984"), anyString());
+		Employee employeeD = new Employee(anyString(), anyString(), toDate("14/07/1974"), anyString());
+		Employee employeeE = new Employee(anyString(), anyString(), toDate("15/07/1929"), anyString());
 
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 					Arrays.asList(
@@ -61,7 +68,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 							)
 				);
 
-		Date today = Utils.toDate("15/07/2015");
+		Date today = toDate("15/07/2015");
 
 		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
 		
