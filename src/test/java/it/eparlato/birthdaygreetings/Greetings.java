@@ -26,7 +26,10 @@ public class Greetings {
 		if(obj instanceof Greetings) {
 			Greetings that = (Greetings)obj;
 			
-			return this.getSubject().equals(that.getSubject());
+			if(this.getSubject().equals(that.getSubject())
+				&& (this.getMessage().equals(that.getMessage()))) {
+				return true;
+			}
 		}
 		
 		return false;

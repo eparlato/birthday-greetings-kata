@@ -16,4 +16,13 @@ public class GreetingsAreEqualsTest {
 		assertEquals(greetingsA, greetingsB);
 	}
 
+	@Test
+	public void notEqualsIfTheyHaveDifferentMessageValues() throws Exception {
+		Greetings greetingsA = new Greetings(
+				new Employee("Ferrari", "Stefano", Utils.toDate("18/06/1983"), "stefano.ferrari@megaditta.it"));
+		Greetings greetingsB = new Greetings(
+				new Employee("Ferrari", "Giulio", Utils.toDate("18/06/1983"), "giulio.ferrari@megaditta.it"));
+		
+		assertNotEquals(greetingsA, greetingsB);
+	}
 }
