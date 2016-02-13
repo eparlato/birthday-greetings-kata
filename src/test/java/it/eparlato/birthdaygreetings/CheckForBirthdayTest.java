@@ -21,42 +21,30 @@ public class CheckForBirthdayTest {
 	
 	@Test
 	public void todayIsTheBirthdayOfEmployee() throws Exception {
-		Date employeeDateOfBirth = toDate("03/02/1968");
-		Date today = toDate("03/02/2016");
+		Employee employee = new Employee(anyString(), anyString(), toDate("03/02/1968"), anyString());
 
-		Employee employee = new Employee(anyString(), anyString(), employeeDateOfBirth, anyString());
-
-		assertTrue(employee.isBirthday(today));
+		assertTrue(employee.isBirthday(toDate("03/02/2016")));
 	}
 
 	@Test
 	public void todayIsNotTheBirthdayOfEmployee() throws Exception {
-		Date employeeDateOfBirth = toDate("02/02/1982");
-		Date today = toDate("03/02/2016");
+		Employee employee = new Employee(anyString(), anyString(), toDate("02/02/1982"), anyString());
 
-		Employee employee = new Employee(anyString(), anyString(), employeeDateOfBirth, anyString());
-
-		assertFalse(employee.isBirthday(today));
+		assertFalse(employee.isBirthday(toDate("03/02/2016")));
 	}
 
 	@Test
 	public void todayTooIsNotTheBirthdayOfEmployee() throws Exception {
-		Date employeeDateOfBirth = toDate("03/01/1982");
-		Date today = toDate("03/02/2016");
+		Employee employee = new Employee(anyString(), anyString(), toDate("03/01/1982"), anyString());
 
-		Employee employee = new Employee(anyString(), anyString(), employeeDateOfBirth, anyString());
-
-		assertFalse(employee.isBirthday(today));
+		assertFalse(employee.isBirthday(toDate("03/02/2016")));
 	}
 
 	@Test
 	public void todayIsBirthdayOfEmployeeWhoseBirthYearIsALeapYear() throws Exception {
-		Date employeeDateOfBirth = toDate("15/01/2000");
-		Date today = toDate("15/01/2016");
+		Employee employee = new Employee(anyString(), anyString(), toDate("15/01/2000"), anyString());
 
-		Employee employee = new Employee(anyString(), anyString(), employeeDateOfBirth, anyString());
-
-		assertTrue(employee.isBirthday(today));
+		assertTrue(employee.isBirthday(toDate("15/01/2016")));
 	}
 
 }

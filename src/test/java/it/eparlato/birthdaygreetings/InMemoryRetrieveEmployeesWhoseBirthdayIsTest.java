@@ -29,9 +29,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.<Employee> emptyList());
 
-		Date today = toDate("31/12/2015");
-
-		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
+		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(toDate("31/12/2015"));
 
 		assertTrue(employees.isEmpty());
 	}
@@ -43,9 +41,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 		InMemoryEmployeeRepository inMemoryEmployeeRepository = new InMemoryEmployeeRepository(
 				Collections.singletonList(employee));
 
-		Date today = toDate("31/12/2015");
-
-		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
+		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(toDate("31/12/2015"));
 
 		assertEquals(employee, employees.get(0));
 	}
@@ -68,9 +64,7 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 							)
 				);
 
-		Date today = toDate("15/07/2015");
-
-		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(today);
+		List<Employee> employees = inMemoryEmployeeRepository.getEmployeesWhoseBirthadyIs(toDate("15/07/2015"));
 		
 		assertTrue(employees.contains(employeeA));
 		assertTrue(employees.contains(employeeC));
