@@ -150,8 +150,6 @@ public class CreateGreetingsTest {
 
 	public interface MessageService {
 		void sendGreetingsToEmployee(Employee employee);
-
-		void sendGreetings(Greetings greetings);
 	}
 
 }
