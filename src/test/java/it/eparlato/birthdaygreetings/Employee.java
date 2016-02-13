@@ -31,4 +31,13 @@ public class Employee {
 			return false;
 		}
 	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
 }
