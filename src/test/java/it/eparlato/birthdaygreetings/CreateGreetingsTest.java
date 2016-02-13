@@ -1,7 +1,5 @@
 package it.eparlato.birthdaygreetings;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -40,7 +38,6 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(toDate("03/02/2016")));
 				will(returnValue(employees));
 
-				oneOf(messageService).sendGreetingsToEmployee(employee);
 				allowing(messageService).sendGreetings(new Greetings(employee));
 			}
 		});
@@ -63,8 +60,7 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(toDate("03/02/2016")));
 				will(returnValue(employees));
 				
-				allowing(messageService).sendGreetingsToEmployee(employee);
-				oneOf(messageService).sendGreetings(new Greetings(employee));
+				allowing(messageService).sendGreetings(new Greetings(employee));
 			}
 		});
 		
@@ -84,7 +80,7 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(anyDateIsOkForThisTest);
 				will(returnValue(noEmployees));
 
-				never(messageService).sendGreetingsToEmployee(new Employee(anyString(), anyString(), anyDateIsOkForThisTest, anyString()));
+				never(messageService).sendGreetings(new Greetings(new Employee(anyString(), anyString(), anyDateIsOkForThisTest, anyString())));
 			}
 		});
 
@@ -117,12 +113,6 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(today));
 				will(returnValue(employees));
 
-				oneOf(messageService).sendGreetingsToEmployee(employeeA);
-				oneOf(messageService).sendGreetingsToEmployee(employeeB);
-				oneOf(messageService).sendGreetingsToEmployee(employeeC);
-				oneOf(messageService).sendGreetingsToEmployee(employeeD);
-				oneOf(messageService).sendGreetingsToEmployee(employeeE);
-				
 				allowing(messageService).sendGreetings(new Greetings(employeeA));
 				allowing(messageService).sendGreetings(new Greetings(employeeB));
 				allowing(messageService).sendGreetings(new Greetings(employeeC));
@@ -146,7 +136,7 @@ public class CreateGreetingsTest {
 				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(anyDateIsOkForThisTest));
 				will(throwException(new IOException()));
 				
-				never(messageService).sendGreetingsToEmployee(new Employee(anyString(), anyString(), anyDateIsOkForThisTest, anyString()));
+				never(messageService).sendGreetings(new Greetings(new Employee(anyString(), anyString(), anyDateIsOkForThisTest, anyString())));
 			}
 		});
 		
@@ -171,8 +161,6 @@ public class CreateGreetingsTest {
 				employeesWhoseBirthdayIsToday = employeeRepository.getEmployeesWhoseBirthadyIs(today);
 
 				for (Employee employee : employeesWhoseBirthdayIsToday) {
-					messageService.sendGreetingsToEmployee(employee);
-					
 					messageService.sendGreetings(new Greetings(employee));
 				}
 
@@ -182,13 +170,10 @@ public class CreateGreetingsTest {
 				// TODO 2: create a new ErrorManager interface?
 				System.err.println("Error to deal with");
 			}
-
 		}
 	}
 
 	public interface MessageService {
-		void sendGreetingsToEmployee(Employee employee);
-
 		void sendGreetings(Greetings greetings);
 	}
 
