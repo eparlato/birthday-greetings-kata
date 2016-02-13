@@ -17,7 +17,6 @@ public class CreateGreetingsFromEmployeeTest {
 	
 	@Test
 	public void anotherMessageThatDependsOnEmployeeName() throws Exception {
-		
 		Greetings greetings = new Greetings(
 				new Employee(Utils.WHATEVER_STRING, "Ugo", Utils.toDate("13/10/1984"), Utils.WHATEVER_STRING));
 		
@@ -26,11 +25,18 @@ public class CreateGreetingsFromEmployeeTest {
 	
 	@Test
 	public void greetingsDestinationIsTheEmailAddressOfTheEmployee() throws Exception {
-		
 		Greetings greetings = new Greetings(
 				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate("12/11/1981"), "diego.catellani@megaditta.it"));
 		
 		assertEquals("diego.catellani@megaditta.it", greetings.getDestination());
+	}
+	
+	@Test
+	public void greetingsSubjectIs() throws Exception {
+		Greetings greetings = new Greetings(
+				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate("12/11/1981"),Utils.WHATEVER_STRING));
+		
+		assertEquals("Happy Birthday!", greetings.getSubject());
 	}
 	
 	public class Greetings {
@@ -39,6 +45,10 @@ public class CreateGreetingsFromEmployeeTest {
 
 		public Greetings(Employee employee) {
 			this.employee = employee;
+		}
+
+		public Object getSubject() {
+			return "Happy Birthday!";
 		}
 
 		public String getDestination() {
