@@ -1,5 +1,7 @@
 package it.eparlato.birthdaygreetings;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -39,9 +41,33 @@ public class CreateGreetingsTest {
 				will(returnValue(employees));
 
 				oneOf(messageService).sendGreetingsToEmployee(employee);
+				allowing(messageService).sendGreetings(new Greetings(employee));
 			}
 		});
 
+		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
+		birthdayService.process(toDate("03/02/2016"));
+	}
+	
+	@Test
+	public void oneEmployeeSendGreetings() throws Exception {
+		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
+		final MessageService messageService = context.mock(MessageService.class);		
+		
+		final Employee employee = new Employee(anyString(), anyString(), toDate("03/02/1982"), anyString());
+		final List<Employee> employees = new ArrayList<Employee>();
+		employees.add(employee);
+		
+		context.checking(new Expectations() {
+			{
+				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(toDate("03/02/2016")));
+				will(returnValue(employees));
+				
+				allowing(messageService).sendGreetingsToEmployee(employee);
+				oneOf(messageService).sendGreetings(new Greetings(employee));
+			}
+		});
+		
 		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
 		birthdayService.process(toDate("03/02/2016"));
 	}
@@ -96,6 +122,12 @@ public class CreateGreetingsTest {
 				oneOf(messageService).sendGreetingsToEmployee(employeeC);
 				oneOf(messageService).sendGreetingsToEmployee(employeeD);
 				oneOf(messageService).sendGreetingsToEmployee(employeeE);
+				
+				allowing(messageService).sendGreetings(new Greetings(employeeA));
+				allowing(messageService).sendGreetings(new Greetings(employeeB));
+				allowing(messageService).sendGreetings(new Greetings(employeeC));
+				allowing(messageService).sendGreetings(new Greetings(employeeD));
+				allowing(messageService).sendGreetings(new Greetings(employeeE));
 			}
 		});
 
@@ -140,6 +172,8 @@ public class CreateGreetingsTest {
 
 				for (Employee employee : employeesWhoseBirthdayIsToday) {
 					messageService.sendGreetingsToEmployee(employee);
+					
+					messageService.sendGreetings(new Greetings(employee));
 				}
 
 			} catch (IOException e) {
@@ -154,6 +188,8 @@ public class CreateGreetingsTest {
 
 	public interface MessageService {
 		void sendGreetingsToEmployee(Employee employee);
+
+		void sendGreetings(Greetings greetings);
 	}
 
 }
