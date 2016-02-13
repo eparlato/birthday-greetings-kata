@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -71,25 +70,5 @@ public class InMemoryRetrieveEmployeesWhoseBirthdayIsTest {
 		assertTrue(employees.contains(employeeE));
 		assertFalse(employees.contains(employeeB));
 		assertFalse(employees.contains(employeeD));
-	}
-
-	public class InMemoryEmployeeRepository implements EmployeeRepository {
-
-		private List<Employee> employees;
-
-		public InMemoryEmployeeRepository(List<Employee> employees) {
-			this.employees = employees;
-		}
-
-		public List<Employee> getEmployeesWhoseBirthadyIs(Date today) {
-			List<Employee> employeesWhoseBirthdayIsToday = new ArrayList<Employee>();
-			for (Employee employee : employees) {
-				if (employee.isBirthday(today)) {
-					employeesWhoseBirthdayIsToday.add(employee);
-				}
-			}
-
-			return employeesWhoseBirthdayIsToday;
-		}
 	}
 }
