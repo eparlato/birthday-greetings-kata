@@ -27,7 +27,9 @@ public class Greetings {
 			Greetings that = (Greetings)obj;
 			
 			if(this.getSubject().equals(that.getSubject())
-				&& (this.getMessage().equals(that.getMessage()))) {
+				&& (this.getMessage().equals(that.getMessage()))
+				&& (this.getDestination().equals(that.getDestination()))
+					) {
 				return true;
 			}
 		}

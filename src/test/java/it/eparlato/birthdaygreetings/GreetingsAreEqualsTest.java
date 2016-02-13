@@ -25,4 +25,14 @@ public class GreetingsAreEqualsTest {
 		
 		assertNotEquals(greetingsA, greetingsB);
 	}
+	
+	@Test
+	public void notEqualsIfTheyHaveDifferentDestination() throws Exception {
+		Greetings greetingsA = new Greetings(
+				new Employee("Brambilla", "Luigi", Utils.toDate("20/05/1986"), "luigi.brambilla@megaditta.it"));
+		Greetings greetingsB = new Greetings(
+				new Employee("Brambilla", "Luigi", Utils.toDate("20/05/1986"), "luigi.brambilla01@megaditta.it"));
+		
+		assertNotEquals(greetingsA, greetingsB);
+	}
 }
