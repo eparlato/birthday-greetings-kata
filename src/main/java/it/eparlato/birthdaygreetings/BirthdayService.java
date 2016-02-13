@@ -1,6 +1,8 @@
 package it.eparlato.birthdaygreetings;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -30,5 +32,22 @@ public class BirthdayService {
 			// TODO 2: create a new ErrorManager interface?
 			System.err.println("Error to deal with");
 		}
+	}
+	
+	public static void main(String[] args) throws ParseException {
+		EmployeeRepository employeeRepository = new InMemoryEmployeeRepository(
+				Arrays.asList(
+						new Employee("Ferrari", "Carlo", Utils.toDate("25/12/1956"), "carlo.ferrari@megaditta.it"),
+						new Employee("Brambilla", "Piero", Utils.toDate("24/12/1978"), "piero.brambilla@megaditta.it"),
+						new Employee("Scarpa", "Franco", Utils.toDate("25/12/1981"), "franco.scarpa@megaditta.it"),
+						new Employee("Esposito", "Gennaro", Utils.toDate("25/11/1993"), "gennaro.esposito@megaditta.it")
+						)
+				);
+		MessageService messageService = new ConsoleMessageService();
+		
+		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
+		
+		String todayIs = "25/12/2016";
+		birthdayService.process(Utils.toDate(todayIs));
 	}
 }
