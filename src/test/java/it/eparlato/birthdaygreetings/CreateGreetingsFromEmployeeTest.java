@@ -10,7 +10,7 @@ public class CreateGreetingsFromEmployeeTest {
 	@Test
 	public void messageDependsOnEmployeeName() throws Exception {
 		Greetings greetings = new Greetings(
-				new Employee(Utils.WHATEVER_STRING, "Carlo", Utils.toDate("13/10/1984"), Utils.WHATEVER_STRING));
+				new Employee(Utils.WHATEVER_STRING, "Carlo", Utils.toDate_dd_MM_yyyy("13/10/1984"), Utils.WHATEVER_STRING));
 		
 		assertEquals("Happy birthday, dear Carlo!", greetings.getMessage());
 	}
@@ -18,7 +18,7 @@ public class CreateGreetingsFromEmployeeTest {
 	@Test
 	public void anotherMessageThatDependsOnEmployeeName() throws Exception {
 		Greetings greetings = new Greetings(
-				new Employee(Utils.WHATEVER_STRING, "Ugo", Utils.toDate("13/10/1984"), Utils.WHATEVER_STRING));
+				new Employee(Utils.WHATEVER_STRING, "Ugo", Utils.toDate_dd_MM_yyyy("13/10/1984"), Utils.WHATEVER_STRING));
 		
 		assertEquals("Happy birthday, dear Ugo!", greetings.getMessage());
 	}
@@ -26,7 +26,7 @@ public class CreateGreetingsFromEmployeeTest {
 	@Test
 	public void greetingsDestinationIsTheEmailAddressOfTheEmployee() throws Exception {
 		Greetings greetings = new Greetings(
-				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate("12/11/1981"), "diego.catellani@megaditta.it"));
+				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate_dd_MM_yyyy("12/11/1981"), "diego.catellani@megaditta.it"));
 		
 		assertEquals("diego.catellani@megaditta.it", greetings.getDestination());
 	}
@@ -34,7 +34,7 @@ public class CreateGreetingsFromEmployeeTest {
 	@Test
 	public void greetingsSubjectIs() throws Exception {
 		Greetings greetings = new Greetings(
-				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate("12/11/1981"),Utils.WHATEVER_STRING));
+				new Employee(Utils.WHATEVER_STRING, Utils.WHATEVER_STRING, Utils.toDate_dd_MM_yyyy("12/11/1981"),Utils.WHATEVER_STRING));
 		
 		assertEquals("Happy Birthday!", greetings.getSubject());
 	}

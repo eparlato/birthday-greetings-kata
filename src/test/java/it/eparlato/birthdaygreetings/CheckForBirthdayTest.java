@@ -15,7 +15,7 @@ public class CheckForBirthdayTest {
 	}
 	
 	private Date toDate(String dateAsString) throws ParseException {
-		return Utils.toDate(dateAsString);
+		return Utils.toDate_dd_MM_yyyy(dateAsString);
 	}
 	
 	

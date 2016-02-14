@@ -1,5 +1,6 @@
 package it.eparlato.birthdaygreetings;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class FromStreamEmployeeRepositoryTest {
@@ -27,9 +29,22 @@ public class FromStreamEmployeeRepositoryTest {
 		EmployeeRepository fromStreamEmployeeRepository = new FromStreamEmployeeRepository(new ByteArrayInputStream(fakeInputStream.getBytes()));
 		
 		List<Employee> employees = 
-				fromStreamEmployeeRepository.getEmployeesWhoseBirthadyIs(Utils.toDate("15/08/2015"));
+				fromStreamEmployeeRepository.getEmployeesWhoseBirthadyIs(Utils.toDate_dd_MM_yyyy("15/08/2015"));
 		
 		assertTrue(employees.isEmpty());
+	}
+	
+	@Test
+	@Ignore("I need a new Utils.toDate() method to deal with date in format yyyy/MM/dd")
+	public void oneEmployeeWhoseBirthdayIsToday() throws Exception {
+		EmployeeRepository fromStreamEmployeeRepository = new FromStreamEmployeeRepository(new ByteArrayInputStream(fakeInputStream.getBytes()));
+
+		Employee expectedEmployee = new Employee("Doe", "John", Utils.toDate_dd_MM_yyyy("08/10/1982"), "john.doe@foobar.com");
+		
+		List<Employee> employees = 
+				fromStreamEmployeeRepository.getEmployeesWhoseBirthadyIs(Utils.toDate_dd_MM_yyyy("08/10/2015"));
+		
+		assertEquals(expectedEmployee, employees.get(0));
 	}
 	
 	public class FromStreamEmployeeRepository implements EmployeeRepository {
