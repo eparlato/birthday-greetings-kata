@@ -4,10 +4,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Employee {
-
-	private Date employeeDateOfBirth;
 	private String lastName;
 	private String firstName;
+	private Date employeeDateOfBirth;
 	private String email;
 
 	public Employee(String lastName, String firstName, Date employeeDateOfBirth, String email) {
@@ -32,12 +31,39 @@ public class Employee {
 		}
 	}
 	
+	public String getLastName() {
+		return lastName;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
 
+	public Date getEmployeeDateOfBirth() {
+		return employeeDateOfBirth;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj instanceof Employee) {
+			Employee that = (Employee)obj;
+			
+			if(this.lastName.equals(that.getLastName()) &&
+					this.firstName.equals(that.getFirstName()) && 
+					this.employeeDateOfBirth.equals(that.getEmployeeDateOfBirth()) &&
+					this.email.equals(that.getEmail())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 
 }
