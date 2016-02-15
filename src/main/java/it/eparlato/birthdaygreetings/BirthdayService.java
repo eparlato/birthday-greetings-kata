@@ -1,5 +1,7 @@
 package it.eparlato.birthdaygreetings;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -26,18 +28,16 @@ public class BirthdayService {
 		}
 	}
 
-	public static void main(String[] args) throws ParseException {
-		EmployeeRepository employeeRepository = new InMemoryEmployeeRepository(Arrays.asList(new Employee("Ferrari",
-				"Carlo", Utils.toDate_dd_MM_yyyy("25/12/1956"), "carlo.ferrari@megaditta.it"), new Employee(
-				"Brambilla", "Piero", Utils.toDate_dd_MM_yyyy("24/12/1978"), "piero.brambilla@megaditta.it"),
-				new Employee("Scarpa", "Franco", Utils.toDate_dd_MM_yyyy("25/12/1981"), "franco.scarpa@megaditta.it"),
-				new Employee("Esposito", "Gennaro", Utils.toDate_dd_MM_yyyy("25/11/1993"),
-						"gennaro.esposito@megaditta.it")));
-		MessageService messageService = new ConsoleMessageService();
-
-		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
-
-		String todayIs = "25/12/2016";
-		birthdayService.process(Utils.toDate_dd_MM_yyyy(todayIs));
+	public static void main(String[] args) throws ParseException, FileNotFoundException {
+		EmployeeRepository fromStreamEmployeeRepository = 
+				new FromStreamEmployeeRepository(new FileInputStream("employee_data.txt"));
+		MessageService smtpMessageService = new SMTPMessageService("localhost", 25, "local@host.com");
+		
+		BirthdayService birthdayService = new BirthdayService(fromStreamEmployeeRepository, smtpMessageService);
+		Date todayIs = Utils.toDate_yyyy_MM_dd("2016/10/08");
+		
+		birthdayService.process(todayIs);
 	}
+
+
 }

@@ -1,6 +1,5 @@
 package it.eparlato.birthdaygreetings;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
