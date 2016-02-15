@@ -124,24 +124,4 @@ public class CreateGreetingsTest {
 		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
 		birthdayService.process(today);
 	}
-
-	@Test
-	public void errorWhileRetrievingEmployeesWhoseBirthdayIsToday() throws Exception {
-		final EmployeeRepository employeeRepository = context.mock(EmployeeRepository.class);
-		final MessageService messageService = context.mock(MessageService.class);
-		final Date anyDateIsOkForThisTest = toDate("15/08/2000");
-		
-		context.checking(new Expectations() {
-			{
-				allowing(employeeRepository).getEmployeesWhoseBirthadyIs(with(anyDateIsOkForThisTest));
-				will(throwException(new IOException()));
-				
-				never(messageService).sendGreetings(new Greetings(new Employee(anyString(), anyString(), anyDateIsOkForThisTest, anyString())));
-			}
-		});
-		
-		BirthdayService birthdayService = new BirthdayService(employeeRepository, messageService);
-		birthdayService.process(anyDateIsOkForThisTest);
-	}
-
 }
