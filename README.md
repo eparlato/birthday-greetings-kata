@@ -17,6 +17,6 @@ I've used Eclipse Spring Tool Suite to build the application.
 This application will send email over an SMTP serve on localhost. 
 If you don't have an SMTP server installed on your machine, you can use a fake SMTP server, that is an application that intercepts all your outgoing messages and lets you display them.
 
-I've successfully used [FakeSMTP](/https://nilhcem.github.io/FakeSMTP/). 
+I've successfully used [FakeSMTP](https://nilhcem.github.io/FakeSMTP/). 
 
 Once you have your fake-or-real SMTP server started, run the main() in class BirthdayService.  
